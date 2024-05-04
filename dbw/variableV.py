@@ -9,7 +9,7 @@ import time
 # import matplotlib.pyplot as plt
 
 GPIO.setmode(GPIO.BOARD)
-GPIO.setup(33, GPIO.OUT)
+GPIO.setup(33, GPIO.OUT, initial=GPIO.HIGH)
 
 pwm_pin = 33
 pwm_freq = 1000
@@ -18,7 +18,7 @@ pwm = GPIO.PWM(pwm_pin, pwm_freq)
 pwm.start(0)
 
 def set_duty_cycle(duty_cycle):
-    pwm.start(duty_cycle)
+    pwm.ChangeDutyCycle(duty_cycle)
 
 def set_voltage(voltage):
     duty_cycle = (voltage - 0.15) / (3.3 - 0.15) * 100
