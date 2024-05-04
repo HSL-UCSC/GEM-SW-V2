@@ -6,12 +6,12 @@ import tkinter as tk
 import threading
 import sys
 import time
-import matplotlib.pyplot as plt
+# import matplotlib.pyplot as plt
 
 GPIO.setmode(GPIO.BOARD)
-GPIO.setup(7, GPIO.OUT)
+GPIO.setup(32, GPIO.OUT)
 
-pwm_pin = 7
+pwm_pin = 32
 pwm_freq = 1000
 # set up GPIO
 pwm = GPIO.PWM(pwm_pin, pwm_freq)
@@ -23,12 +23,16 @@ def set_duty_cycle(duty_cycle):
 def set_voltage(voltage):
     duty_cycle = (voltage - 0.15) / (3.3 - 0.15) * 100
     set_duty_cycle(duty_cycle)
+    print(f"Set voltage to {voltage}V\n")
 
 def go():
+    # start pwm
     set_voltage(3.3)
+    print("Going\n")
 
 def stop():
     set_voltage(0.15)
+    print("Stopping\n")
 
 def key_press(event):
     key = event.char
