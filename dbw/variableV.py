@@ -19,6 +19,7 @@ pwm.start(0)
 
 def set_duty_cycle(duty_cycle):
     pwm.ChangeDutyCycle(duty_cycle)
+    time.sleep(0.1)
 
 def set_voltage(voltage):
     duty_cycle = (voltage - 0.15) / (3.3 - 0.15) * 100
