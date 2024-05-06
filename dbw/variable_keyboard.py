@@ -3,10 +3,10 @@ import keyboard
 import time
 
 # Set GPIO mode
-GPIO.setmode(GPIO.BCM)
+GPIO.setmode(GPIO.BOARD)
 
 # Set PWM pin
-pwm_pin = 18  # Adjust pin number according to your setup
+pwm_pin = 12  # Adjust pin number according to your setup
 
 # Set PWM frequency (Hz)
 frequency = 1000
