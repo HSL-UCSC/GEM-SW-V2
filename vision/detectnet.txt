@@ -1,2 +1,4 @@
+./jetson-inference/tools/tao-model-downloader.sh
+
 python3.6 detectnet-camera.py --camera=/dev/video0 --network trafficcamnet
 python3.6 detectnet-camera.py --camera/dev/video0 --network dashcamnet

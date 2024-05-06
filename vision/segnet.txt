@@ -1,1 +1,3 @@
+./jetson-inference/tools/download-models.sh
+
 python3.6 segnet.py --network=fcn-resnet18-cityscapes-512x256 --camera=/dev/video0
