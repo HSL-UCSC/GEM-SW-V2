@@ -28,7 +28,7 @@ def set_voltage(voltage):
 
 def go():
     # start pwm
-    set_voltage(3.3)
+    set_voltage(3)
     print("Going\n")
 
 def stop():
