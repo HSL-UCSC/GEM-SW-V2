@@ -1,26 +1,27 @@
-import tkinter as tk
-import threading
-
 import sys
+import threading
 import time
+import tkinter as tk
 
-import RPi.GPIO as GPIO
+import RPi.GPIO as GPIO  # type: ignore
 
 GPIO.setmode(GPIO.BOARD)
 GPIO.setup(7, GPIO.OUT)
 
 
 def go():
-	GPIO.output(7, GPIO.HIGH)
-	print("speeeeed")
+    GPIO.output(7, GPIO.HIGH)
+    print("speeeeed")
+
+
 def stop():
-	GPIO.output(7, GPIO.LOW)
-	print("stop")
+    GPIO.output(7, GPIO.LOW)
+    print("stop")
+
+
 # Dictionary to store key-command mappings
-key_commands = {
-    "w": lambda: go(), 
-    "s": lambda: stop()
-}
+key_commands = {"w": lambda: go(), "s": lambda: stop()}
+
 
 # Function to execute commands based on the pressed key
 def execute_commands(key):
@@ -28,10 +29,12 @@ def execute_commands(key):
     if key in key_commands:
         key_commands[key]()  # Call the command function for the pressed key
 
+
 # Function to handle key press events
 def on_key_press(event):
     key = event.char.lower()  # Convert to lowercase for case-insensitive detection
     threading.Thread(target=execute_commands, args=(key,)).start()
+
 
 # Create the main window
 window = tk.Tk()

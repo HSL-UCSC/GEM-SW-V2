@@ -1,5 +1,6 @@
-import RPi.GPIO as GPIO
 import time
+
+import RPi.GPIO as GPIO  # type: ignore
 
 # Set GPIO mode
 GPIO.setmode(GPIO.BOARD)
@@ -24,7 +25,7 @@ try:
     while True:
         # Wait for user input
         input("Press Enter to set voltage to 3 volts: ")
-        
+
         # Set voltage to 3 volts
         desired_voltage = 3.0
         duty_cycle = (desired_voltage / max_voltage) * 100
