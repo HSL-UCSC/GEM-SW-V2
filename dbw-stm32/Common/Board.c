@@ -26,6 +26,11 @@ PUTCHAR_PROTOTYPE
   return ch;
 }
 
+UART_HandleTypeDef getUARTHandle()
+{
+  return huart2;
+}
+
 static uint8_t init_status = FALSE;
 
 /**

@@ -17,7 +17,7 @@
 #define TRUE ((int8_t)1)
 #endif
 #ifndef ERROR
-#define ERROR ((int8_t) - 1)
+#define ERROR ((int8_t)-1)
 #define SUCCESS ((int8_t)1)
 #endif
 
@@ -28,6 +28,8 @@
 #define USART_TX_GPIO_Port GPIOA
 #define USART_RX_Pin GPIO_PIN_3
 #define USART_RX_GPIO_Port GPIOA
+
+UART_HandleTypeDef getUARTHandle();
 
 /**
  * @function BOARD_Init(void)
