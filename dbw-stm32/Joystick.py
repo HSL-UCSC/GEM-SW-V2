@@ -18,8 +18,8 @@ AXES = [0, 1, 2, 3]
 BUTTONS = [10]
 
 REVERSED = [False, True, False, False]
-SCALE = [1.0, 1.0, 1.0, 1.0]
-BIAS = [0.0, 0.0, 0.0, 0.0]
+SCALE = [1.0, 1.0, 0.5, 1.0]
+BIAS = [0.0, 0.0, 0.5, 0.0]
 
 
 class Joystick:
