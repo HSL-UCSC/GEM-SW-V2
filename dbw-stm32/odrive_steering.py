@@ -2,7 +2,7 @@ import odrive
 import odrive.enums
 from Joystick import Joystick, JoystickConstants
 
-# must not be zero - doesn't work?
+# must not be zero - zero value doesn't work?
 # TODO: double check this
 DEFAULT_POS = 1e-3
 JOY_SCALE = 1

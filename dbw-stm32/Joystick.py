@@ -14,12 +14,9 @@ Also see ece163/Contants/JoystickConstants.py for the parameters that define the
 import time
 import pygame
 
-AXES = [0, 1, 2, 3]
-BUTTONS = [10]
+AXES = 4
+BUTTONS = 16
 
-REVERSED = [False, True, False, False]
-SCALE = [1.0, 1.0, 0.5, 1.0]
-BIAS = [0.0, 0.0, 0.5, 0.0]
 
 # Constants for the joystick
 class JoystickConstants:
@@ -75,9 +72,10 @@ class Joystick:
         # Search for a joystick with atleast 4 axises
         for stick_i in range(pygame.joystick.get_count()):
             self.device = pygame.joystick.Joystick(stick_i)
-            if self.device.get_numaxes() < len(
-                AXES
-            ) or self.device.get_numbuttons() < len(BUTTONS):
+            if (
+                self.device.get_numaxes() < AXES
+                or self.device.get_numbuttons() < BUTTONS
+            ):
                 self.device.quit()
                 self.device = None
             else:
@@ -98,6 +96,10 @@ class Joystick:
 
         pygame.init()
 
+        self.REVERSED = [False, False, False, False]
+        self.SCALE = [1.0, 1.0, 1.0, 1.0]
+        self.BIAS = [0.0, 0.0, 0.0, 0.0]
+
     def get_joystick_values(self):
         """
         Function to map the raw axis and button readings from the joystick to joystickValues type.
@@ -107,15 +109,15 @@ class Joystick:
         pygame.event.get(pygame.JOYAXISMOTION)
 
         # Data is returned in a datatype to store relevant controller information
-        if self.device and self.device.get_numaxes() > len(AXES):
+        if self.device and self.device.get_numaxes() > AXES:
             return {
                 "axes": tuple(
-                    (self.device.get_axis(i) * (-1.0 if REVERSED[i] else 1.0))
-                    * SCALE[i]
-                    + BIAS[i]
-                    for i in AXES
+                    (self.device.get_axis(i) * (-1.0 if self.REVERSED[i] else 1.0))
+                    * self.SCALE[i]
+                    + self.BIAS[i]
+                    for i in range(AXES)
                 ),
-                "buttons": tuple(self.device.get_button(i) for i in BUTTONS),
+                "buttons": tuple(self.device.get_button(i) for i in range(BUTTONS)),
             }
 
         else:
