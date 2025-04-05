@@ -21,6 +21,40 @@ REVERSED = [False, True, False, False]
 SCALE = [1.0, 1.0, 0.5, 1.0]
 BIAS = [0.0, 0.0, 0.5, 0.0]
 
+# Constants for the joystick
+class JoystickConstants:
+    # Axis indexes
+    AXIS_LX = 0
+    AXIS_LY = 1
+    AXIS_RX = 2
+    AXIS_RY = 3
+
+    AXIS_L_TRIG = 4
+    AXIS_R_TRIG = 5
+
+    # Button indexes
+    BTN_A = 0
+    BTN_B = 1
+    BTN_X = 2
+    BTN_Y = 3
+
+    BTN_MINUS = 4
+    BTN_HOME = 5
+    BTN_PLUS = 6
+
+    BTN_L_STICK = 7
+    BTN_R_STICK = 8
+
+    BTN_L_BUMPER = 9
+    BTN_R_BUMPER = 10
+
+    BTN_DPAD_UP = 11
+    BTN_DPAD_DOWN = 12
+    BTN_DPAD_LEFT = 13
+    BTN_DPAD_RIGHT = 14
+
+    BTN_CIRCLE = 15
+
 
 class Joystick:
     """
