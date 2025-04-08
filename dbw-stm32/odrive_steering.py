@@ -7,8 +7,11 @@ from Joystick import Joystick, JoystickConstants
 # TODO: double check this
 DEFAULT_POS = 0
 JOY_SCALE = 0.01
-MAX_POS = 0.8
-MIN_POS = -2.65
+MAX_POS = -5.8
+MIN_POS = -9.2
+
+# what portion of the total steering wheel turn ability to use (ex. 0.5 would mean limiting to -50% to 50%)
+BOUND = 0.3
 
 # initialize odrive
 print("Finding ODrive...")
@@ -31,13 +34,15 @@ while True:
             continue
         
         if j_vals["buttons"][JoystickConstants.BTN_R_BUMPER]:
-            pos += j_vals["axes"][JoystickConstants.AXIS_LX] * JOY_SCALE
-            pos = max(MIN_POS, min(MAX_POS, pos))
+            # pos += j_vals["axes"][JoystickConstants.AXIS_LX] * JOY_SCALE
+            # pos = max(MIN_POS, min(MAX_POS, pos))
 
-            if j_vals["buttons"][JoystickConstants.BTN_A]:
-                pos = DEFAULT_POS
-            elif j_vals["buttons"][JoystickConstants.BTN_B]:
-                DEFAULT_POS = pos
+            # if j_vals["buttons"][JoystickConstants.BTN_A]:
+            #     pos = DEFAULT_POS
+            # elif j_vals["buttons"][JoystickConstants.BTN_B]:
+            #     DEFAULT_POS = pos
+
+            pos = (j_vals["axes"][JoystickConstants.AXIS_LX]) * 0.5 * BOUND * (MAX_POS - MIN_POS) + (MAX_POS + MIN_POS) / 2
 
             odrv0.axis0.controller.input_pos = pos
 
