@@ -17,6 +17,8 @@ import pygame
 AXES = 4
 BUTTONS = 16
 
+DEADBAND = 0.06
+
 
 # Constants for the joystick
 class JoystickConstants:
@@ -110,9 +112,13 @@ class Joystick:
 
         # Data is returned in a datatype to store relevant controller information
         if self.device and self.device.get_numaxes() > AXES:
+            axes = [self.device.get_axis(i) for i in range(AXES)]
             return {
                 "axes": tuple(
-                    (self.device.get_axis(i) * (-1.0 if self.REVERSED[i] else 1.0))
+                    (
+                        (axes[i] if abs(axes[i]) > DEADBAND else 0)
+                        * (-1.0 if self.REVERSED[i] else 1.0)
+                    )
                     * self.SCALE[i]
                     + self.BIAS[i]
                     for i in range(AXES)
