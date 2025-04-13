@@ -14,7 +14,7 @@ Also see ece163/Contants/JoystickConstants.py for the parameters that define the
 import time
 import pygame
 
-AXES = 4
+AXES = 6
 BUTTONS = 16
 
 DEADBAND = 0.06
@@ -98,9 +98,9 @@ class Joystick:
 
         pygame.init()
 
-        self.REVERSED = [False, False, False, False]
-        self.SCALE = [1.0, 1.0, 1.0, 1.0]
-        self.BIAS = [0.0, 0.0, 0.0, 0.0]
+        self.REVERSED = [False, False, False, False, False, False]
+        self.SCALE = [1.0, 1.0, 1.0, 1.0, 1.0, 1.0]
+        self.BIAS = [0.0, 0.0, 0.0, 0.0, 1.0, 1.0]
 
     def get_joystick_values(self):
         """
@@ -111,7 +111,7 @@ class Joystick:
         pygame.event.get(pygame.JOYAXISMOTION)
 
         # Data is returned in a datatype to store relevant controller information
-        if self.device and self.device.get_numaxes() > AXES:
+        if self.device and self.device.get_numaxes() >= AXES:
             axes = [self.device.get_axis(i) for i in range(AXES)]
             return {
                 "axes": tuple(
