@@ -85,7 +85,7 @@ class Joystick:
 
         # Check if a device connected
         if self.device == None:
-            print("No compatible joysticks found, use the sliders.")
+            print("No compatible joysticks found.")
             self.active = False
         else:
             self.active = True

@@ -2,32 +2,75 @@ import time
 
 import odrive
 import odrive.enums
+import threading
 from Joystick import Joystick, JoystickConstants
 from serial import Serial
 
-MAX_POS = 2.936
-CENTER_POS = 1.086
-MIN_POS = -0.61
+MAX_POS = None
+CENTER_POS = None
+MIN_POS = None
 MAX_DELTA_POS = 0.05
 
 # what portion of the total steering wheel turn ability to use (ex. 0.5 would mean limiting to -50% to 50%)
 BOUND = 0.7
 
-
-MAX_THROTTLE = 255  # fit in one byte
+# maximum throttle value (255 is the maximum for a byte, lower values to limit the throttle)
+MAX_THROTTLE = 255
 
 # initialize odrive
 print("Finding ODrive...")
 odrv0 = odrive.find_any(timeout=10)
 odrv0.clear_errors()
+odrv0.axis0.requested_state = odrive.enums.AxisState.IDLE
 
+# calibrate the odrive (get the min and max positions)
+print("Please turn the steering wheel all the way to the left and right to calibrate.")
+print("Press Enter when done...")
+
+finish_calibration = False
+pos_vals = []
+
+
+# wait for the user to press Enter to finish calibration
+def wait_for_calibration():
+    global finish_calibration
+    input()
+    finish_calibration = True
+
+
+t = threading.Thread(target=wait_for_calibration).start()
+while not finish_calibration:
+    pos_vals.append(odrv0.axis0.pos_estimate)
+
+# calculate the min and max positions
+MIN_POS = min(pos_vals)
+MAX_POS = max(pos_vals)
+print(f"Min pos: {MIN_POS}, Max pos: {MAX_POS}")
+
+# get the center position
+print("Please turn the steering wheel to the center position.")
+print("Press Enter when done...")
+input()  # wait for Enter
+CENTER_POS = odrv0.axis0.pos_estimate
+print(f"Center pos: {CENTER_POS}")
+
+# initialize the joystick
 j = Joystick()
+if not j.active:
+    print("No joystick found, exiting...")
+    exit(1)
+
 pos = 0.0
 last_pos = odrv0.axis0.pos_estimate
 throttle = 0
 active = False
 
-s = Serial("/dev/tty.usbmodem1103", 115200)
+# open the serial port for the throttle
+try:
+    s = Serial("/dev/tty.usbmodem1103", 115200)
+except Exception as e:
+    print(f"Error opening serial port: {e}")
+    exit(1)
 
 # configure the joystick rx axis for steering
 j.REVERSED[JoystickConstants.AXIS_RX] = False
